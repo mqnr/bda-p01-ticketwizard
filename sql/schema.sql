@@ -14,7 +14,7 @@ CREATE TABLE eventos (
     descripcion VARCHAR(100)
 );
 
-CREATE TABLE perfiles (
+CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(50) NOT NULL UNIQUE,
     nombre VARCHAR(30) NOT NULL,
@@ -30,9 +30,9 @@ CREATE TABLE boletos (
     fila INT NOT NULL,
     asiento VARCHAR(30) NOT NULL,
     id_asiento INT NOT NULL,
-    perfil_id INT,
+    usuario_id INT,
     evento_id INT NOT NULL,
-    FOREIGN KEY (perfil_id) REFERENCES perfiles(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
     FOREIGN KEY (evento_id) REFERENCES eventos(id)
 );
 
@@ -41,17 +41,17 @@ CREATE TABLE transacciones (
     fecha_hora_adquisicion DATETIME NOT NULL,
     tipo_adquisicion VARCHAR(20) NOT NULL,
     evento_id INT NOT NULL,
-    perfil_id INT NOT NULL,
+    usuario_id INT NOT NULL,
     FOREIGN KEY (evento_id) REFERENCES eventos(id),
-    FOREIGN KEY (perfil_id) REFERENCES perfiles(id)
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE compras_ventas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     apartado BOOLEAN DEFAULT FALSE,
     fecha_limite DATETIME,
-    perfil_id INT NOT NULL,
-    FOREIGN KEY (perfil_id) REFERENCES perfiles(id)
+    usuario_id INT NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE historiales_cv (
@@ -62,14 +62,14 @@ CREATE TABLE historiales_cv (
 
 DELIMITER //
 DROP TRIGGER IF EXISTS derivar_edad_insert//
-CREATE TRIGGER derivar_edad_insert BEFORE INSERT ON perfiles
+CREATE TRIGGER derivar_edad_insert BEFORE INSERT ON usuarios
 FOR EACH ROW
 BEGIN
     SET NEW.edad = TIMESTAMPDIFF(YEAR, NEW.fecha_nacimiento, CURDATE());
 END //
 
 DROP TRIGGER IF EXISTS derivar_edad_update//
-CREATE TRIGGER derivar_edad_update BEFORE UPDATE ON perfiles
+CREATE TRIGGER derivar_edad_update BEFORE UPDATE ON usuarios
 FOR EACH ROW
 BEGIN
     SET NEW.edad = TIMESTAMPDIFF(YEAR, NEW.fecha_nacimiento, CURDATE());
