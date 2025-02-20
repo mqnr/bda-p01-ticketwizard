@@ -81,7 +81,7 @@ public class Usuario {
         this.email = email;
     }
 
-    public float getSaldo() {
+    public int getSaldo() {
         return saldo;
     }
 
