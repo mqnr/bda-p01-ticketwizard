@@ -1,0 +1,3 @@
+db.url=jdbc:mysql://localhost:3306/bda_p01_ticketwizard
+db.user=root
+db.password=tu_contraseña_aquí
