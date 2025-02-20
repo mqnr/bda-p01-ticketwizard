@@ -1,5 +1,6 @@
 package edu.student.itson.bda.ticketwizard.entidades;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
@@ -11,10 +12,10 @@ public class Usuario {
     private String apellido;
     private String direccion;
     private String email;
-    private int saldo;
+    private BigDecimal saldo;
     private LocalDate fechaNacimiento;
 
-    public Usuario(int id, String nombre, String apellido, String direccion, String email, int saldo, LocalDate fechaNacimiento) {
+    public Usuario(int id, String nombre, String apellido, String direccion, String email, BigDecimal saldo, LocalDate fechaNacimiento) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -28,21 +29,21 @@ public class Usuario {
         return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }
 
-    public void incrementarSaldo(int monto) {
-        if (monto <= 0) {
+    public void incrementarSaldo(BigDecimal monto) {
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("El monto debe ser positivo");
         }
-        this.saldo += monto;
+        this.saldo = this.saldo.add(monto);
     }
 
-    public void decrementarSaldo(int monto) {
-        if (monto <= 0) {
+    public void decrementarSaldo(BigDecimal monto) {
+        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("El monto debe ser positivo");
         }
-        if (monto > saldo) {
+        if (monto.compareTo(saldo) > 0) {
             throw new IllegalArgumentException("Saldo insuficiente");
         }
-        this.saldo -= monto;
+        this.saldo = this.saldo.subtract(monto);
     }
 
     public int getId() {
@@ -81,7 +82,7 @@ public class Usuario {
         this.email = email;
     }
 
-    public int getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 

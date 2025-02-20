@@ -21,7 +21,7 @@ CREATE TABLE usuarios (
     apellido VARCHAR(30) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    saldo INT NOT NULL,
+    saldo DECIMAL(10, 2) NOT NULL,
     edad INT NOT NULL
 );
 
