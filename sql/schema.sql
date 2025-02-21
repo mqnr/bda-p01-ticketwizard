@@ -21,8 +21,7 @@ CREATE TABLE usuarios (
     apellido VARCHAR(30) NOT NULL,
     direccion VARCHAR(100) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
-    saldo DECIMAL(10, 2) NOT NULL,
-    edad INT NOT NULL
+    saldo DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE boletos (
@@ -60,19 +59,3 @@ CREATE TABLE historiales_cv (
     nombre_evento VARCHAR(50) NOT NULL,
     rango_fecha DATE NOT NULL
 );
-
-DELIMITER //
-DROP TRIGGER IF EXISTS derivar_edad_insert//
-CREATE TRIGGER derivar_edad_insert BEFORE INSERT ON usuarios
-FOR EACH ROW
-BEGIN
-    SET NEW.edad = TIMESTAMPDIFF(YEAR, NEW.fecha_nacimiento, CURDATE());
-END //
-
-DROP TRIGGER IF EXISTS derivar_edad_update//
-CREATE TRIGGER derivar_edad_update BEFORE UPDATE ON usuarios
-FOR EACH ROW
-BEGIN
-    SET NEW.edad = TIMESTAMPDIFF(YEAR, NEW.fecha_nacimiento, CURDATE());
-END //
-DELIMITER ;
