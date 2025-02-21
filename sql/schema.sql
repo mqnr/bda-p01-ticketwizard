@@ -28,6 +28,7 @@ CREATE TABLE usuarios (
 
 CREATE TABLE boletos (
     numero_serie INT AUTO_INCREMENT PRIMARY KEY,
+    precio DECIMAL(10, 2) NOT NULL,
     fila INT NOT NULL,
     asiento VARCHAR(30) NOT NULL,
     id_asiento INT NOT NULL,
