@@ -7,6 +7,7 @@ USE bda_p01_ticketwizard;
 CREATE TABLE eventos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
     fecha DATE NOT NULL,
     recinto VARCHAR(50) NOT NULL,
     ciudad VARCHAR(50) NOT NULL,
