@@ -31,23 +31,6 @@ public class Usuario {
         return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }
 
-    public void incrementarSaldo(BigDecimal monto) {
-        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("El monto debe ser positivo");
-        }
-        this.saldo = this.saldo.add(monto);
-    }
-
-    public void decrementarSaldo(BigDecimal monto) {
-        if (monto.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("El monto debe ser positivo");
-        }
-        if (monto.compareTo(saldo) > 0) {
-            throw new IllegalArgumentException("Saldo insuficiente");
-        }
-        this.saldo = this.saldo.subtract(monto);
-    }
-
     public static boolean esEmailValido(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email != null && Pattern.matches(regex, email);
