@@ -1,7 +1,7 @@
 package edu.student.itson.bda.ticketwizard.persistencia;
 
 import edu.student.itson.bda.ticketwizard.dtos.AgregarSaldoDTO;
-import edu.student.itson.bda.ticketwizard.dtos.BuscarUsuarioDTO;
+import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioDTO;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class UsuariosDAO {
 
     public void agregarSaldo(AgregarSaldoDTO agregarSaldoDTO) {
-        String codigoSQL = "UPDATE usuarios SET saldo = saldo + ? WHERE email = ?";
+        String codigoSQL = "UPDATE usuarios SET saldo = saldo + ? WHERE id = ?";
 
         try {
             Connection conexion = ManejadorConexiones.crearConexion();
@@ -20,18 +20,18 @@ public class UsuariosDAO {
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
             comando.setBigDecimal(1, agregarSaldoDTO.getMonto());
-            comando.setString(2, agregarSaldoDTO.getEmail());
+            comando.setInt(2, agregarSaldoDTO.getIdUsuario());
 
             int filasAfectadas = comando.executeUpdate();
             if (filasAfectadas == 0) {
-                throw new RuntimeException("Usuario no encontrado: " + agregarSaldoDTO.getEmail());
+                throw new RuntimeException("Usuario no encontrado: " + agregarSaldoDTO.getIdUsuario());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar saldo", e);
         }
     }
 
-    public Usuario consultarUsuario(BuscarUsuarioDTO buscarUsuarioDTO) {
+    public Usuario consultarUsuario(ObtenerUsuarioDTO buscarUsuarioDTO) {
         String codigoSQL = """
                            SELECT
                              id,
@@ -41,7 +41,7 @@ public class UsuariosDAO {
                              direccion,
                              fecha_nacimiento,
                              saldo
-                           FROM usuarios WHERE email = ?
+                           FROM usuarios WHERE id = ?
                            """;
 
         try {
@@ -49,7 +49,7 @@ public class UsuariosDAO {
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setString(1, buscarUsuarioDTO.getEmail());
+            comando.setInt(1, buscarUsuarioDTO.getUsuarioId());
 
             ResultSet resultadosConsulta = comando.executeQuery();
             if (resultadosConsulta.next()) {
@@ -63,28 +63,28 @@ public class UsuariosDAO {
                         resultadosConsulta.getDate("fecha_nacimiento").toLocalDate()
                 );
             } else {
-                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getEmail());
+                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getUsuarioId());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar saldo", e);
         }
     }
 
-    public BigDecimal consultarSaldo(BuscarUsuarioDTO buscarUsuarioDTO) {
-        String codigoSQL = "SELECT saldo FROM usuarios WHERE email = ?";
+    public BigDecimal consultarSaldo(ObtenerUsuarioDTO buscarUsuarioDTO) {
+        String codigoSQL = "SELECT saldo FROM usuarios WHERE id = ?";
 
         try {
             Connection conexion = ManejadorConexiones.crearConexion();
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setString(1, buscarUsuarioDTO.getEmail());
+            comando.setInt(1, buscarUsuarioDTO.getUsuarioId());
 
             ResultSet resultadosConsulta = comando.executeQuery();
             if (resultadosConsulta.next()) {
                 return resultadosConsulta.getBigDecimal("saldo");
             } else {
-                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getEmail());
+                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getUsuarioId());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar saldo", e);

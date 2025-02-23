@@ -1,7 +1,7 @@
 package edu.student.itson.bda.ticketwizard.control;
 
 import edu.student.itson.bda.ticketwizard.dtos.AgregarSaldoDTO;
-import edu.student.itson.bda.ticketwizard.dtos.BuscarUsuarioDTO;
+import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioDTO;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 import edu.student.itson.bda.ticketwizard.presentacion.AgregarSaldo;
@@ -13,25 +13,24 @@ public class ControlUsuarios {
     private final UsuariosDAO usuariosDAO;
     private InicioPerfil formInicioPerfil;
     private AgregarSaldo formAgregarSaldo;
-    private final String usuarioCorreo;
+    private int usuarioId;
 
     public ControlUsuarios(UsuariosDAO usuariosDAO) {
         this.usuariosDAO = usuariosDAO;
-        Usuario usuario = consultarUsuarioAleatorio();
-        this.usuarioCorreo = usuario.getEmail();
     }
 
     public void iniciarCasoUso() {
+        usuarioId = consultarUsuarioAleatorio().getId();
         this.formInicioPerfil = new InicioPerfil(this);
         this.formInicioPerfil.setVisible(true);
     }
 
     public void agregarSaldo(BigDecimal monto) {
-        this.usuariosDAO.agregarSaldo(new AgregarSaldoDTO(usuarioCorreo, monto));
+        this.usuariosDAO.agregarSaldo(new AgregarSaldoDTO(usuarioId, monto));
     }
 
     public Usuario consultarUsuario() {
-        return this.usuariosDAO.consultarUsuario(new BuscarUsuarioDTO(usuarioCorreo));
+        return this.usuariosDAO.consultarUsuario(new ObtenerUsuarioDTO(usuarioId));
     }
 
     public Usuario consultarUsuarioAleatorio() {

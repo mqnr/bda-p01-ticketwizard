@@ -4,16 +4,16 @@ import java.math.BigDecimal;
 
 public class AgregarSaldoDTO {
 
-    private final String email;
+    private final int idUsuario;
     private final BigDecimal monto;
 
-    public AgregarSaldoDTO(String email, BigDecimal monto) {
-        this.email = email;
+    public AgregarSaldoDTO(int idUsuario, BigDecimal monto) {
+        this.idUsuario = idUsuario;
         this.monto = monto;
     }
 
-    public String getEmail() {
-        return email;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
     public BigDecimal getMonto() {
