@@ -2,13 +2,13 @@ package edu.student.itson.bda.ticketwizard.dtos;
 
 public class ObtenerUsuarioDTO {
 
-    private final int usuarioId;
+    private final int idUsuario;
 
-    public ObtenerUsuarioDTO(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public ObtenerUsuarioDTO(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public int getUsuarioId() {
-        return usuarioId;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 }

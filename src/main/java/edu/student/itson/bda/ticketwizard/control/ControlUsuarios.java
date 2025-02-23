@@ -13,24 +13,24 @@ public class ControlUsuarios {
     private final UsuariosDAO usuariosDAO;
     private InicioPerfil formInicioPerfil;
     private AgregarSaldo formAgregarSaldo;
-    private int usuarioId;
+    private int idUsuario;
 
     public ControlUsuarios(UsuariosDAO usuariosDAO) {
         this.usuariosDAO = usuariosDAO;
     }
 
     public void iniciarCasoUso() {
-        usuarioId = consultarUsuarioAleatorio().getId();
+        idUsuario = consultarUsuarioAleatorio().getId();
         this.formInicioPerfil = new InicioPerfil(this);
         this.formInicioPerfil.setVisible(true);
     }
 
     public void agregarSaldo(BigDecimal monto) {
-        this.usuariosDAO.agregarSaldo(new AgregarSaldoDTO(usuarioId, monto));
+        this.usuariosDAO.agregarSaldo(new AgregarSaldoDTO(idUsuario, monto));
     }
 
     public Usuario consultarUsuario() {
-        return this.usuariosDAO.consultarUsuario(new ObtenerUsuarioDTO(usuarioId));
+        return this.usuariosDAO.consultarUsuario(new ObtenerUsuarioDTO(idUsuario));
     }
 
     public Usuario consultarUsuarioAleatorio() {

@@ -49,7 +49,7 @@ public class UsuariosDAO {
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setInt(1, buscarUsuarioDTO.getUsuarioId());
+            comando.setInt(1, buscarUsuarioDTO.getIdUsuario());
 
             ResultSet resultadosConsulta = comando.executeQuery();
             if (resultadosConsulta.next()) {
@@ -63,7 +63,7 @@ public class UsuariosDAO {
                         resultadosConsulta.getDate("fecha_nacimiento").toLocalDate()
                 );
             } else {
-                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getUsuarioId());
+                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getIdUsuario());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar saldo", e);
@@ -78,13 +78,13 @@ public class UsuariosDAO {
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setInt(1, buscarUsuarioDTO.getUsuarioId());
+            comando.setInt(1, buscarUsuarioDTO.getIdUsuario());
 
             ResultSet resultadosConsulta = comando.executeQuery();
             if (resultadosConsulta.next()) {
                 return resultadosConsulta.getBigDecimal("saldo");
             } else {
-                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getUsuarioId());
+                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getIdUsuario());
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar saldo", e);
