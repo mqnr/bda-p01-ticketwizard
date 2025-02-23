@@ -8,3 +8,5 @@ nbdist
 target
 .nb-gradle
 database.properties
+.direnv
+mysql-data
