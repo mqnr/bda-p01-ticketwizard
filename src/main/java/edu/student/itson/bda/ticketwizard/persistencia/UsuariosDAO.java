@@ -1,7 +1,5 @@
 package edu.student.itson.bda.ticketwizard.persistencia;
 
-import edu.student.itson.bda.ticketwizard.dtos.AgregarSaldoDTO;
-import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioDTO;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -11,7 +9,7 @@ import java.sql.SQLException;
 
 public class UsuariosDAO {
 
-    public void agregarSaldo(AgregarSaldoDTO agregarSaldoDTO) {
+    public void agregarSaldo(int idUsuario, BigDecimal monto) {
         String codigoSQL = "UPDATE usuarios SET saldo = saldo + ? WHERE id = ?";
 
         try {
@@ -19,19 +17,19 @@ public class UsuariosDAO {
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setBigDecimal(1, agregarSaldoDTO.getMonto());
-            comando.setInt(2, agregarSaldoDTO.getIdUsuario());
+            comando.setBigDecimal(1, monto);
+            comando.setInt(2, idUsuario);
 
             int filasAfectadas = comando.executeUpdate();
             if (filasAfectadas == 0) {
-                throw new RuntimeException("Usuario no encontrado: " + agregarSaldoDTO.getIdUsuario());
+                throw new RuntimeException("Usuario no encontrado: " + idUsuario);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al actualizar saldo", e);
         }
     }
 
-    public Usuario consultarUsuario(ObtenerUsuarioDTO buscarUsuarioDTO) {
+    public Usuario consultarUsuario(int idUsuario) {
         String codigoSQL = """
                            SELECT
                              id,
@@ -49,7 +47,7 @@ public class UsuariosDAO {
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setInt(1, buscarUsuarioDTO.getIdUsuario());
+            comando.setInt(1, idUsuario);
 
             ResultSet resultadosConsulta = comando.executeQuery();
             if (resultadosConsulta.next()) {
@@ -63,14 +61,14 @@ public class UsuariosDAO {
                         resultadosConsulta.getDate("fecha_nacimiento").toLocalDate()
                 );
             } else {
-                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getIdUsuario());
+                throw new RuntimeException("Usuario no encontrado: " + idUsuario);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar saldo", e);
         }
     }
 
-    public BigDecimal consultarSaldo(ObtenerUsuarioDTO buscarUsuarioDTO) {
+    public BigDecimal consultarSaldo(int idUsuario) {
         String codigoSQL = "SELECT saldo FROM usuarios WHERE id = ?";
 
         try {
@@ -78,13 +76,13 @@ public class UsuariosDAO {
 
             PreparedStatement comando = conexion.prepareStatement(codigoSQL);
 
-            comando.setInt(1, buscarUsuarioDTO.getIdUsuario());
+            comando.setInt(1, idUsuario);
 
             ResultSet resultadosConsulta = comando.executeQuery();
             if (resultadosConsulta.next()) {
                 return resultadosConsulta.getBigDecimal("saldo");
             } else {
-                throw new RuntimeException("Usuario no encontrado: " + buscarUsuarioDTO.getIdUsuario());
+                throw new RuntimeException("Usuario no encontrado: " + idUsuario);
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar saldo", e);

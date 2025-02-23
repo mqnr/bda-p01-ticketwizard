@@ -1,6 +1,7 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
+import edu.student.itson.bda.ticketwizard.dtos.AgregarSaldoDTO;
 import java.math.BigDecimal;
 
 public class AgregarSaldo extends javax.swing.JFrame {
@@ -96,7 +97,7 @@ public class AgregarSaldo extends javax.swing.JFrame {
 
     private void confirmarSaldoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmarSaldoMouseClicked
         BigDecimal saldoPorAgregar = new BigDecimal(this.cantidadSaldo.getText());
-        this.control.agregarSaldo(saldoPorAgregar);
+        this.control.agregarSaldo(new AgregarSaldoDTO(this.control.getIdUsuario(), saldoPorAgregar));
         this.control.mostrarFormularioInicioPerfil();
     }//GEN-LAST:event_confirmarSaldoMouseClicked
 
