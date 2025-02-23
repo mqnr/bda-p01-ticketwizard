@@ -1,13 +1,13 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
-import edu.student.itson.bda.ticketwizard.control.ControlAgregarSaldo;
+import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import java.math.BigDecimal;
 
 public class AgregarSaldo extends javax.swing.JFrame {
 
-    private final ControlAgregarSaldo control;
+    private final ControlUsuarios control;
 
-    public AgregarSaldo(ControlAgregarSaldo control) {
+    public AgregarSaldo(ControlUsuarios control) {
         this.control = control;
         initComponents();
     }

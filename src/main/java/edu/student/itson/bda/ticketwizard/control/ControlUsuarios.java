@@ -8,14 +8,14 @@ import edu.student.itson.bda.ticketwizard.presentacion.AgregarSaldo;
 import edu.student.itson.bda.ticketwizard.presentacion.InicioPerfil;
 import java.math.BigDecimal;
 
-public class ControlAgregarSaldo {
+public class ControlUsuarios {
 
     private final UsuariosDAO usuariosDAO;
     private InicioPerfil formInicioPerfil;
     private AgregarSaldo formAgregarSaldo;
     private final String usuarioCorreo;
 
-    public ControlAgregarSaldo(UsuariosDAO usuariosDAO) {
+    public ControlUsuarios(UsuariosDAO usuariosDAO) {
         this.usuariosDAO = usuariosDAO;
         Usuario usuario = consultarUsuarioAleatorio();
         this.usuarioCorreo = usuario.getEmail();

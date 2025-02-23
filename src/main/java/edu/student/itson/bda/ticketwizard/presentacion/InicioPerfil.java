@@ -1,13 +1,13 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
-import edu.student.itson.bda.ticketwizard.control.ControlAgregarSaldo;
+import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 
 public class InicioPerfil extends javax.swing.JFrame {
 
-    private final ControlAgregarSaldo control;
+    private final ControlUsuarios control;
 
-    public InicioPerfil(ControlAgregarSaldo control) {
+    public InicioPerfil(ControlUsuarios control) {
         this.control = control;
         initComponents();
         establecerInformacionUsuario();
