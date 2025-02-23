@@ -1,9 +1,11 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlEventos;
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
+import edu.student.itson.bda.ticketwizard.persistencia.EventosDAO;
 
-public class InicioPerfil extends javax.swing.JFrame {
+public final class InicioPerfil extends javax.swing.JFrame {
 
     private final ControlUsuarios control;
 
@@ -28,6 +30,14 @@ public class InicioPerfil extends javax.swing.JFrame {
         nombrePerfil3 = new javax.swing.JLabel();
         saldoPerfil = new javax.swing.JLabel();
         nombrePerfil5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuEventos = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -53,6 +63,31 @@ public class InicioPerfil extends javax.swing.JFrame {
 
         nombrePerfil5.setText("Nombre:");
 
+        jButton1.setText("Comprar boletos");
+
+        jButton2.setText("Ver boletos disponibles");
+
+        jButton3.setText("Mis transacciones");
+
+        menuEventos.setText("Eventos");
+        menuEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuEventosMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuEventos);
+
+        jMenu2.setText("Mis boletos");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Mi cuenta");
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Salir");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -71,6 +106,15 @@ public class InicioPerfil extends javax.swing.JFrame {
                         .addGap(61, 61, 61)
                         .addComponent(agregarSaldo)))
                 .addGap(188, 188, 188))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(61, 61, 61)
+                    .addComponent(jButton1)
+                    .addGap(46, 46, 46)
+                    .addComponent(jButton2)
+                    .addGap(52, 52, 52)
+                    .addComponent(jButton3)
+                    .addContainerGap(62, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -86,7 +130,15 @@ public class InicioPerfil extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nombrePerfil3)
                     .addComponent(saldoPerfil))
-                .addContainerGap(222, Short.MAX_VALUE))
+                .addContainerGap(199, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(170, 170, 170)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)
+                        .addComponent(jButton3))
+                    .addContainerGap(148, Short.MAX_VALUE)))
         );
 
         pack();
@@ -100,6 +152,13 @@ public class InicioPerfil extends javax.swing.JFrame {
         control.mostrarFormularioAgregarSaldo();
     }//GEN-LAST:event_agregarSaldoMouseClicked
 
+    private void menuEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuEventosMouseClicked
+        EventosDAO usuariosDAO = new EventosDAO();
+        ControlEventos controlEventos = new ControlEventos(usuariosDAO);
+        this.dispose();
+        controlEventos.iniciarCasoUso();
+    }//GEN-LAST:event_menuEventosMouseClicked
+
     public void establecerInformacionUsuario() {
         Usuario usuario = control.consultarUsuario();
         String nombreCompleto = usuario.getNombre() + " " + usuario.getApellido();
@@ -109,6 +168,14 @@ public class InicioPerfil extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarSaldo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menuEventos;
     private javax.swing.JLabel nombrePerfil;
     private javax.swing.JLabel nombrePerfil1;
     private javax.swing.JLabel nombrePerfil3;
