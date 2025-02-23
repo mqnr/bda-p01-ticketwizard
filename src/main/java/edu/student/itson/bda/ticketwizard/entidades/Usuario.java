@@ -48,23 +48,19 @@ public class Usuario {
         this.saldo = this.saldo.subtract(monto);
     }
 
-    // Validación para correo electrónico (solo un ejemplo de validación)
     public static boolean esEmailValido(String email) {
         String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email != null && Pattern.matches(regex, email);
     }
 
-    // Validación de formato para la fecha de nacimiento (debe ser una fecha pasada)
     public static boolean esFechaValida(LocalDate fechaNacimiento) {
         return fechaNacimiento != null && fechaNacimiento.isBefore(LocalDate.now());
     }
 
-    // Validación para evitar correos duplicados
     public static boolean verificarEmailUnico(String email, List<Usuario> usuarios) {
         return usuarios.stream().noneMatch(usuario -> usuario.getEmail().equals(email));
     }
 
-    // Método para verificar si un usuario está intentando comprar su propio boleto
     public boolean puedeComprarBoleto(Usuario vendedor) {
         if (this.id == vendedor.getId()) {
             throw new IllegalArgumentException("No puedes comprar tu propio boleto");
