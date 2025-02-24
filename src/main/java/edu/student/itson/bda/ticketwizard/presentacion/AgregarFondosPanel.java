@@ -66,7 +66,7 @@ public class AgregarFondosPanel extends PanelBaseUsuario {
 
     @Override
     public void refrescarDatos() {
-        Usuario usuarioActualizado = controlUsuarios.consultarUsuario();
+        Usuario usuarioActualizado = obtenerUsuarioActualizado();
         saldoActualLabel.setText(formatoMoneda.format(usuarioActualizado.getSaldo()));
     }
 
