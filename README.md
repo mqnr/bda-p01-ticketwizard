@@ -16,3 +16,7 @@ Ticketwizard es un sistema que permite la gestión de compra y reventa de boleto
 - Félix Isaac Sánchez Quintero
 - Bryan Alberto Villagrana Esquer
 - Martín Zamorano Acuña
+
+## Base de datos
+
+En `src/main/resources`, copiar `database.properties.example` a `database.properties` y llenar con los datos apropiados. También correr en MySQL los archivos dentro del directorio `sql` en el root de este repositorio.
