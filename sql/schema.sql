@@ -58,16 +58,23 @@ CREATE TABLE transacciones (
         CHECK (NOT (tipo_adquisicion = 'REVENTA' AND comision IS NULL))
 );
 
-CREATE TABLE compras_ventas (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    apartado BOOLEAN DEFAULT FALSE,
-    fecha_limite DATETIME,
-    usuario_id INT NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+CREATE TABLE boletos_reventa (
+    boleto_id INT PRIMARY KEY,
+    vendedor_id INT NOT NULL,
+    precio_reventa DECIMAL(10, 2) NOT NULL,
+    fecha_limite DATE NOT NULL,
+    fecha_publicacion DATETIME NOT NULL,
+    FOREIGN KEY (boleto_id) REFERENCES boletos(numero_serie),
+    FOREIGN KEY (vendedor_id) REFERENCES usuarios(id),
+    CONSTRAINT chk_precio_reventa CHECK (precio_reventa > 0)
 );
 
-CREATE TABLE historiales_cv (
+CREATE TABLE reservaciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_evento VARCHAR(50) NOT NULL,
-    rango_fecha DATE NOT NULL
+    boleto_id INT NOT NULL,
+    usuario_id INT NOT NULL,
+    fecha_reserva DATETIME NOT NULL,
+    fecha_expiracion DATETIME NOT NULL,
+    FOREIGN KEY (boleto_id) REFERENCES boletos(numero_serie),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
