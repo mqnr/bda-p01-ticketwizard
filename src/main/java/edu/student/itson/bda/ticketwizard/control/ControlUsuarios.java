@@ -1,10 +1,12 @@
 package edu.student.itson.bda.ticketwizard.control;
 
 import edu.student.itson.bda.ticketwizard.dtos.AgregarSaldoDTO;
+import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioDTO;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 import edu.student.itson.bda.ticketwizard.presentacion.AgregarSaldo;
 import edu.student.itson.bda.ticketwizard.presentacion.InicioPerfil;
+import edu.student.itson.bda.ticketwizard.presentacion.MiCuenta;
 import java.math.BigDecimal;
 
 public class ControlUsuarios {
@@ -12,6 +14,7 @@ public class ControlUsuarios {
     private final UsuariosDAO usuariosDAO;
     private InicioPerfil formInicioPerfil;
     private AgregarSaldo formAgregarSaldo;
+    private MiCuenta formMiCuenta;
     private int idUsuario;
 
     public ControlUsuarios(UsuariosDAO usuariosDAO) {
@@ -32,7 +35,6 @@ public class ControlUsuarios {
         if (datos.getMonto().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("El monto debe ser positivo");
         }
-
         usuariosDAO.agregarSaldo(datos.getIdUsuario(), datos.getMonto());
     }
 
@@ -51,8 +53,21 @@ public class ControlUsuarios {
     }
 
     public void mostrarFormularioInicioPerfil() {
-        this.formAgregarSaldo.dispose();
+        if (this.formAgregarSaldo != null) {
+            this.formAgregarSaldo.dispose();
+        } else if (this.formMiCuenta != null) {
+            this.formMiCuenta.dispose();
+        }
         this.formInicioPerfil.establecerInformacionUsuario();
         this.formInicioPerfil.setVisible(true);
+    }
+
+    public void mostrarFormularioMiCuenta() {
+        this.formInicioPerfil.dispose();
+        this.formMiCuenta = new MiCuenta(this);
+        this.formMiCuenta.setVisible(true);
+    }
+    public void actualizarDatosUsuario(ObtenerUsuarioDTO datos) {
+        usuariosDAO.actualizarDatosUsuario(datos.getIdUsuario(), datos.getNombre(), datos.getApellido(), datos.getDireccion(), datos.getEmail());
     }
 }
