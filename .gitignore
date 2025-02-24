@@ -10,3 +10,4 @@ target
 database.properties
 .direnv
 mysql-data
+.gui_alternativa
