@@ -118,7 +118,7 @@ public class LoginFrame extends JFrame {
 
         // abrir pantalla principal y cerrar esta
         SwingUtilities.invokeLater(() -> {
-            new MainFrame().setVisible(true);
+            new PantallaPrincipalFrame().setVisible(true);
             this.dispose();
         });
     }
