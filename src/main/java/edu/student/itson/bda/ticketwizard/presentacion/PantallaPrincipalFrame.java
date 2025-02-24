@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PantallaPrincipalFrame extends JFrame {
+
     private Usuario usuario;
     private CardLayout cardLayout;
     private JPanel panelContenido;

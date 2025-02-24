@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 public class AgregarFondosPanel extends JPanel {
+
     public AgregarFondosPanel(Usuario usuario) {
         add(new JLabel("Panel de agregado de fondos - No implementado"));
     }

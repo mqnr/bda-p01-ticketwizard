@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 public class BuscarBoletosPanel extends JPanel {
+
     public BuscarBoletosPanel(Usuario usuario) {
         add(new JLabel("Panel de búsqueda de boletos - No implementado"));
     }

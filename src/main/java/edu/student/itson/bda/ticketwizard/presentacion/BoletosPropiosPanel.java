@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 public class BoletosPropiosPanel extends JPanel {
+
     public BoletosPropiosPanel(Usuario usuario) {
         add(new JLabel("Panel de boletos propios - No implementado"));
     }
