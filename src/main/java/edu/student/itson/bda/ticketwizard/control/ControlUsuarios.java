@@ -5,17 +5,11 @@ import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioDTO;
 import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioIdDTO;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
-import edu.student.itson.bda.ticketwizard.presentacion.AgregarSaldo;
-import edu.student.itson.bda.ticketwizard.presentacion.InicioPerfil;
-import edu.student.itson.bda.ticketwizard.presentacion.MiCuenta;
 import java.math.BigDecimal;
 
 public class ControlUsuarios {
 
     private final UsuariosDAO usuariosDAO;
-    private InicioPerfil formInicioPerfil;
-    private AgregarSaldo formAgregarSaldo;
-    private MiCuenta formMiCuenta;
     private int idUsuario;
 
     public ControlUsuarios(UsuariosDAO usuariosDAO) {
@@ -28,8 +22,6 @@ public class ControlUsuarios {
 
     public void iniciarCasoUso() {
         idUsuario = consultarUsuarioAleatorio().getId();
-        this.formInicioPerfil = new InicioPerfil(this);
-        this.formInicioPerfil.setVisible(true);
     }
 
     public void agregarSaldo(AgregarSaldoDTO datos) {
@@ -38,7 +30,7 @@ public class ControlUsuarios {
         }
         usuariosDAO.agregarSaldo(datos.getIdUsuario(), datos.getMonto());
     }
-    
+
     public Usuario obtenerUsuario(ObtenerUsuarioIdDTO datos) {
         return this.usuariosDAO.consultarUsuario(datos.getIdUsuario());
     }
@@ -51,27 +43,6 @@ public class ControlUsuarios {
         return this.usuariosDAO.consultarUsuarioAleatorio();
     }
 
-    public void mostrarFormularioAgregarSaldo() {
-        this.formInicioPerfil.dispose();
-        this.formAgregarSaldo = new AgregarSaldo(this);
-        this.formAgregarSaldo.setVisible(true);
-    }
-
-    public void mostrarFormularioInicioPerfil() {
-        if (this.formAgregarSaldo != null) {
-            this.formAgregarSaldo.dispose();
-        } else if (this.formMiCuenta != null) {
-            this.formMiCuenta.dispose();
-        }
-        this.formInicioPerfil.establecerInformacionUsuario();
-        this.formInicioPerfil.setVisible(true);
-    }
-
-    public void mostrarFormularioMiCuenta() {
-        this.formInicioPerfil.dispose();
-        this.formMiCuenta = new MiCuenta(this);
-        this.formMiCuenta.setVisible(true);
-    }
     public void actualizarDatosUsuario(ObtenerUsuarioDTO datos) {
         usuariosDAO.actualizarDatosUsuario(datos.getIdUsuario(), datos.getNombre(), datos.getApellido(), datos.getDireccion(), datos.getEmail());
     }

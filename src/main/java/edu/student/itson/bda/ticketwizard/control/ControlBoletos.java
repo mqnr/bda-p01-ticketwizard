@@ -7,8 +7,6 @@ import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import edu.student.itson.bda.ticketwizard.persistencia.BoletosDAO;
 import edu.student.itson.bda.ticketwizard.persistencia.TransaccionesDAO;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
-import edu.student.itson.bda.ticketwizard.presentacion.BoletosComprados;
-import edu.student.itson.bda.ticketwizard.presentacion.InicioPerfil;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -19,9 +17,7 @@ public class ControlBoletos {
     private static final BigDecimal PORCENTAJE_COMISION = new BigDecimal("0.03");
 
     private final BoletosDAO boletosDAO;
-    private BoletosComprados formCatalogoBoletos;
     private final Usuario usuario;
-    private InicioPerfil formInicioPerfil;
     private ControlUsuarios controlUsuario;
 
     private final TransaccionesDAO transaccionesDAO;
@@ -35,28 +31,6 @@ public class ControlBoletos {
         // TODO: Inyectar estas dependencias apropiadamente
         this.transaccionesDAO = new TransaccionesDAO();
         this.usuariosDAO = new UsuariosDAO();
-    }
-
-    public void iniciarCasoUso() {
-        this.formCatalogoBoletos = new BoletosComprados(this, this.usuario);
-        this.formCatalogoBoletos.setVisible(true);
-    }
-
-    public void buscarBoletos() {
-        List<Boleto> boletos = this.boletosDAO.obtenerTodosBoletos();
-        this.mostrarFormularioBoletosDisponibles();
-    }
-
-    public void mostrarFormularioBoletosDisponibles() {
-        this.formInicioPerfil.dispose();
-        this.formCatalogoBoletos = new BoletosComprados(this, this.usuario);
-        this.formCatalogoBoletos.setVisible(true);
-    }
-
-    public void mostrarFormularioInicioPerfil() {
-        this.formCatalogoBoletos.dispose();
-        this.formInicioPerfil = new InicioPerfil(this.controlUsuario);
-        this.formInicioPerfil.setVisible(true);
     }
 
     public List<Boleto> consultarListaBoletos() {

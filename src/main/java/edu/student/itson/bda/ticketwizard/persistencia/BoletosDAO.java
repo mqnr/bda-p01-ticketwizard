@@ -13,10 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- *
- * @author LENOVO
- */
 public class BoletosDAO {
 
     public List<Boleto> obtenerBoletosUsuario(int idUsuario) {

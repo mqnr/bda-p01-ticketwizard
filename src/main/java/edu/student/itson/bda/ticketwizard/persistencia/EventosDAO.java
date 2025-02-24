@@ -8,10 +8,6 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- *
- * @author LENOVO
- */
 public class EventosDAO {
 
     public List<Evento> consultarEventos() {

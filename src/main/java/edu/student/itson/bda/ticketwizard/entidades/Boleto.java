@@ -2,10 +2,6 @@ package edu.student.itson.bda.ticketwizard.entidades;
 
 import java.math.BigDecimal;
 
-/**
- *
- * @author LENOVO
- */
 public class Boleto {
 
     private final int id;
@@ -119,7 +115,4 @@ public class Boleto {
     public String toString() {
         return "Boleto{" + "id=" + id + ", numeroSerie=" + numeroSerie + ", precio=" + precio + ", fila=" + fila + ", asiento=" + asiento + ", idAsiento=" + idAsiento + ", usuarioId=" + usuarioId + ", eventoId=" + eventoId + '}';
     }
-
-    
-
 }

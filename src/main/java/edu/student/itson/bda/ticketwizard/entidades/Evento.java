@@ -1,14 +1,5 @@
 package edu.student.itson.bda.ticketwizard.entidades;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Objects;
-
-/**
- *
- * @author LENOVO
- */
 public class Evento {
 
     private final int id;
@@ -107,5 +98,4 @@ public class Evento {
     public String toString() {
         return "Evento{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + ", recinto=" + recinto + ", ciudad=" + ciudad + ", estado=" + estado + ", descripcion=" + descripcion + '}';
     }
-
 }
