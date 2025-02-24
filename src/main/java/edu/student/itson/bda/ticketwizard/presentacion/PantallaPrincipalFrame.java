@@ -2,14 +2,21 @@ package edu.student.itson.bda.ticketwizard.presentacion;
 
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class PantallaPrincipalFrame extends JFrame {
 
     private final ControlUsuarios controlUsuarios;
-    private Usuario usuario;
+    private final Usuario usuario;
     private CardLayout cardLayout;
     private JPanel panelContenido;
 
@@ -34,15 +41,38 @@ public class PantallaPrincipalFrame extends JFrame {
         cardLayout = new CardLayout();
         panelContenido = new JPanel(cardLayout);
 
-        panelContenido.add(new PerfilPanel(usuario), PANEL_PERFIL);
+        PerfilPanel perfilPanel = new PerfilPanel(controlUsuarios, usuario);
+        perfilPanel.setName(PANEL_PERFIL);
+        panelContenido.add(perfilPanel, PANEL_PERFIL);
         panelContenido.add(new BoletosPropiosPanel(usuario), PANEL_MIS_BOLETOS);
         panelContenido.add(new BuscarBoletosPanel(usuario), PANEL_BUSCAR);
         panelContenido.add(new HistorialPanel(usuario), PANEL_HISTORIAL);
-        panelContenido.add(new AgregarFondosPanel(controlUsuarios, usuario), PANEL_FONDOS);
+        AgregarFondosPanel fondosPanel = new AgregarFondosPanel(controlUsuarios, usuario);
+        fondosPanel.setName(PANEL_FONDOS);
+        panelContenido.add(fondosPanel, PANEL_FONDOS);
 
+        // barra de menú
         configurarMenu();
 
         add(panelContenido, BorderLayout.CENTER);
+    }
+
+    private void mostrarPanel(String nombrePanel) {
+        cardLayout.show(panelContenido, nombrePanel);
+
+        Component panel = buscarComponentePorNombre(panelContenido, nombrePanel);
+        if (panel instanceof PanelActualizable) {
+            ((PanelActualizable) panel).refrescarDatos();
+        }
+    }
+
+    private Component buscarComponentePorNombre(Container container, String nombre) {
+        for (Component comp : container.getComponents()) {
+            if (nombre.equals(comp.getName())) {
+                return comp;
+            }
+        }
+        return null;
     }
 
     private void configurarMenu() {
@@ -50,25 +80,25 @@ public class PantallaPrincipalFrame extends JFrame {
 
         JMenu menuPerfil = new JMenu("Perfil");
         JMenuItem itemPerfil = new JMenuItem("Ver perfil");
-        itemPerfil.addActionListener(e -> cardLayout.show(panelContenido, PANEL_PERFIL));
+        itemPerfil.addActionListener(e -> mostrarPanel(PANEL_PERFIL));
         menuPerfil.add(itemPerfil);
 
         JMenu menuBoletos = new JMenu("Boletos");
         JMenuItem itemMisBoletos = new JMenuItem("Mis boletos");
-        itemMisBoletos.addActionListener(e -> cardLayout.show(panelContenido, PANEL_MIS_BOLETOS));
+        itemMisBoletos.addActionListener(e -> mostrarPanel(PANEL_MIS_BOLETOS));
         JMenuItem itemBuscar = new JMenuItem("Buscar boletos");
-        itemBuscar.addActionListener(e -> cardLayout.show(panelContenido, PANEL_BUSCAR));
+        itemBuscar.addActionListener(e -> mostrarPanel(PANEL_BUSCAR));
         menuBoletos.add(itemMisBoletos);
         menuBoletos.add(itemBuscar);
 
         JMenu menuHistorial = new JMenu("Historial");
         JMenuItem itemHistorial = new JMenuItem("Ver historial");
-        itemHistorial.addActionListener(e -> cardLayout.show(panelContenido, PANEL_HISTORIAL));
+        itemHistorial.addActionListener(e -> mostrarPanel(PANEL_HISTORIAL));
         menuHistorial.add(itemHistorial);
 
         JMenu menuFondos = new JMenu("Fondos");
         JMenuItem itemFondos = new JMenuItem("Agregar fondos");
-        itemFondos.addActionListener(e -> cardLayout.show(panelContenido, PANEL_FONDOS));
+        itemFondos.addActionListener(e -> mostrarPanel(PANEL_FONDOS));
         menuFondos.add(itemFondos);
 
         JMenu menuSesion = new JMenu("Sesión");
@@ -86,7 +116,7 @@ public class PantallaPrincipalFrame extends JFrame {
     }
 
     private void cerrarSesion() {
-        // TODO: despejar sección cuando esto esté implementado
+        // TODO: despejar sesión cuando esto esté implementado
         dispose();
         SwingUtilities.invokeLater(() -> new LoginFrame().setVisible(true));
     }

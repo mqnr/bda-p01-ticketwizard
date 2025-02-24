@@ -17,17 +17,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AgregarFondosPanel extends JPanel {
+public class AgregarFondosPanel extends PanelBaseUsuario {
 
-    private final ControlUsuarios controlUsuarios;
-    private final Usuario usuario;
     private final JTextField montoField;
     private final JLabel saldoActualLabel;
     private final NumberFormat formatoMoneda;
 
     public AgregarFondosPanel(ControlUsuarios controlUsuarios, Usuario usuario) {
-        this.usuario = usuario;
-        this.controlUsuarios = controlUsuarios;
+        super(controlUsuarios, usuario);
         this.formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "MX"));
 
         setLayout(new BorderLayout(10, 10));
@@ -65,6 +62,12 @@ public class AgregarFondosPanel extends JPanel {
         agregarButton.addActionListener(e -> agregarFondos());
         panelSur.add(agregarButton);
         add(panelSur, BorderLayout.SOUTH);
+    }
+
+    @Override
+    public void refrescarDatos() {
+        Usuario usuarioActualizado = controlUsuarios.consultarUsuario();
+        saldoActualLabel.setText(formatoMoneda.format(usuarioActualizado.getSaldo()));
     }
 
     private void agregarFondos() {
