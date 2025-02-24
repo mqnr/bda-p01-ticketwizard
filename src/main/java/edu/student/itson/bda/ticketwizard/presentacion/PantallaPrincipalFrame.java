@@ -1,5 +1,6 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 
 import javax.swing.*;
@@ -7,6 +8,7 @@ import java.awt.*;
 
 public class PantallaPrincipalFrame extends JFrame {
 
+    private final ControlUsuarios controlUsuarios;
     private Usuario usuario;
     private CardLayout cardLayout;
     private JPanel panelContenido;
@@ -17,7 +19,8 @@ public class PantallaPrincipalFrame extends JFrame {
     private static final String PANEL_HISTORIAL = "Historial";
     private static final String PANEL_FONDOS = "AgregarFondos";
 
-    public PantallaPrincipalFrame(Usuario usuario) {
+    public PantallaPrincipalFrame(ControlUsuarios controlUsuarios, Usuario usuario) {
+        this.controlUsuarios = controlUsuarios;
         this.usuario = usuario;
         setTitle("Ticketwizard");
         setSize(800, 600);
@@ -35,7 +38,7 @@ public class PantallaPrincipalFrame extends JFrame {
         panelContenido.add(new BoletosPropiosPanel(usuario), PANEL_MIS_BOLETOS);
         panelContenido.add(new BuscarBoletosPanel(usuario), PANEL_BUSCAR);
         panelContenido.add(new HistorialPanel(usuario), PANEL_HISTORIAL);
-        panelContenido.add(new AgregarFondosPanel(usuario), PANEL_FONDOS);
+        panelContenido.add(new AgregarFondosPanel(controlUsuarios, usuario), PANEL_FONDOS);
 
         configurarMenu();
 

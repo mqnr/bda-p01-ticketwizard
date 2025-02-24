@@ -1,5 +1,6 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 
 import java.awt.Component;
@@ -121,7 +122,8 @@ public class LoginFrame extends JFrame {
         // abrir pantalla principal y cerrar esta
         SwingUtilities.invokeLater(() -> {
             // TODO: hacer esto una realidad
-            new PantallaPrincipalFrame(new UsuariosDAO().consultarUsuarioAleatorio()).setVisible(true);
+            UsuariosDAO usuariosDAO = new UsuariosDAO();
+            new PantallaPrincipalFrame(new ControlUsuarios(usuariosDAO), usuariosDAO.consultarUsuarioAleatorio()).setVisible(true);
             this.dispose();
         });
     }

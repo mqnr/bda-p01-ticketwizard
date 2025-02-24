@@ -2,6 +2,7 @@ package edu.student.itson.bda.ticketwizard.control;
 
 import edu.student.itson.bda.ticketwizard.dtos.AgregarSaldoDTO;
 import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioDTO;
+import edu.student.itson.bda.ticketwizard.dtos.ObtenerUsuarioIdDTO;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 import edu.student.itson.bda.ticketwizard.presentacion.AgregarSaldo;
@@ -36,6 +37,10 @@ public class ControlUsuarios {
             throw new IllegalArgumentException("El monto debe ser positivo");
         }
         usuariosDAO.agregarSaldo(datos.getIdUsuario(), datos.getMonto());
+    }
+    
+    public Usuario obtenerUsuario(ObtenerUsuarioIdDTO datos) {
+        return this.usuariosDAO.consultarUsuario(datos.getIdUsuario());
     }
 
     public Usuario consultarUsuario() {
