@@ -3,6 +3,7 @@ package edu.student.itson.bda.ticketwizard;
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 import edu.student.itson.bda.ticketwizard.presentacion.LoginFrame;
+import java.io.File;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -12,7 +13,7 @@ public class TicketwizardApp {
 
     public static void main(String[] args) {
         // la GUI alternativa
-        if (new java.io.File(".gui_alternativa").exists()) {
+        if (new File(".gui_alternativa").exists()) {
             try {
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
