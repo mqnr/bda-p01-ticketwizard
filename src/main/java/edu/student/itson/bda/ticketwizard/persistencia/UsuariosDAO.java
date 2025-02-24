@@ -29,6 +29,29 @@ public class UsuariosDAO {
         }
     }
 
+    public void actualizarDatosUsuario(int usuarioId, String nombre, String apellido, String direccion, String email) {
+        String codigoSQL = "UPDATE usuarios SET nombre = ?, apellido = ?, direccion = ?, email = ? WHERE id = ?";
+
+        try {
+            Connection conexion = ManejadorConexiones.crearConexion();
+
+            PreparedStatement comando = conexion.prepareStatement(codigoSQL);
+
+            comando.setString(1, nombre);
+            comando.setString(2, apellido);
+            comando.setString(3, direccion);
+            comando.setString(4, email);
+            comando.setInt(5, usuarioId);
+            
+            int filasAfectadas = comando.executeUpdate();
+            if (filasAfectadas == 0) {
+                throw new RuntimeException("Usuario no encontrado: " + usuarioId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar los datos", e);
+        }
+    }
+
     public Usuario consultarUsuario(int idUsuario) {
         String codigoSQL = """
                            SELECT
