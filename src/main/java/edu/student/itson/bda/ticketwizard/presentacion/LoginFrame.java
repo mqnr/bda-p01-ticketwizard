@@ -1,5 +1,7 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -118,7 +120,8 @@ public class LoginFrame extends JFrame {
 
         // abrir pantalla principal y cerrar esta
         SwingUtilities.invokeLater(() -> {
-            new PantallaPrincipalFrame().setVisible(true);
+            // TODO: hacer esto una realidad
+            new PantallaPrincipalFrame(new UsuariosDAO().consultarUsuarioAleatorio()).setVisible(true);
             this.dispose();
         });
     }
