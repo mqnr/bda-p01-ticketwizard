@@ -31,7 +31,7 @@ public class ControlBoletos {
     }
 
     public void buscarBoletos() {
-        List<Boleto> boleto = this.boletosDAO.consultarMisBoletos();
+        List<Boleto> boletos = this.boletosDAO.obtenerTodosBoletos();
         this.mostrarFormularioBoletosDisponibles();
     }
 
@@ -49,6 +49,6 @@ public class ControlBoletos {
     }
 
     public List<Boleto> consultarListaBoletos() {
-        return this.boletosDAO.consultarMisBoletos();
+        return this.boletosDAO.obtenerTodosBoletos();
     }
 }
