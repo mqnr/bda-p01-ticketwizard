@@ -1,6 +1,8 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlTransacciones;
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
+import edu.student.itson.bda.ticketwizard.persistencia.TransaccionesDAO;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 
 import java.awt.Component;
@@ -53,7 +55,7 @@ public class LoginFrame extends JFrame {
         labelTitulo.setFont(new Font("Dialog", Font.BOLD, 24));
         labelTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // páneles de entrada
+        // paneles de entrada
         JPanel panelEmail = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panelEmail.add(new JLabel("Correo electrónico:"));
         panelEmail.add(campoEmail);
@@ -123,7 +125,11 @@ public class LoginFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             // TODO: hacer esto una realidad
             UsuariosDAO usuariosDAO = new UsuariosDAO();
-            new PantallaPrincipalFrame(new ControlUsuarios(usuariosDAO), usuariosDAO.consultarUsuarioAleatorio()).setVisible(true);
+            new PantallaPrincipalFrame(
+                    new ControlUsuarios(usuariosDAO),
+                    new ControlTransacciones(new TransaccionesDAO()),
+                    usuariosDAO.consultarUsuarioAleatorio()
+            ).setVisible(true);
             this.dispose();
         });
     }
