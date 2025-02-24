@@ -42,7 +42,7 @@ public class UsuariosDAO {
             comando.setString(3, direccion);
             comando.setString(4, email);
             comando.setInt(5, usuarioId);
-            
+
             int filasAfectadas = comando.executeUpdate();
             if (filasAfectadas == 0) {
                 throw new RuntimeException("Usuario no encontrado: " + usuarioId);
@@ -148,6 +148,32 @@ public class UsuariosDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException("Error al consultar usuario aleatorio", e);
+        }
+    }
+
+    public void descontarSaldo(int idUsuario, BigDecimal monto) {
+        String codigoSQL = "UPDATE usuarios SET saldo = saldo - ? WHERE id = ?";
+
+        try (Connection conexion = ManejadorConexiones.crearConexion(); PreparedStatement comando = conexion.prepareStatement(codigoSQL)) {
+
+            comando.setBigDecimal(1, monto);
+            comando.setInt(2, idUsuario);
+
+            int filasAfectadas = comando.executeUpdate();
+            if (filasAfectadas == 0) {
+                throw new RuntimeException("Usuario no encontrado: " + idUsuario);
+            }
+
+            try (PreparedStatement checkSaldo = conexion.prepareStatement(
+                    "SELECT saldo FROM usuarios WHERE id = ?")) {
+                checkSaldo.setInt(1, idUsuario);
+                ResultSet rs = checkSaldo.executeQuery();
+                if (rs.next() && rs.getBigDecimal("saldo").compareTo(BigDecimal.ZERO) < 0) {
+                    throw new RuntimeException("Saldo insuficiente");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al descontar saldo", e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlBoletos;
 import edu.student.itson.bda.ticketwizard.control.ControlTransacciones;
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
@@ -18,6 +19,7 @@ public class PantallaPrincipalFrame extends JFrame {
 
     private final ControlUsuarios controlUsuarios;
     private final ControlTransacciones controlTransacciones;
+    private final ControlBoletos controlBoletos;
     private final Usuario usuario;
     private CardLayout cardLayout;
     private JPanel panelContenido;
@@ -28,9 +30,10 @@ public class PantallaPrincipalFrame extends JFrame {
     private static final String PANEL_HISTORIAL = "Historial";
     private static final String PANEL_FONDOS = "AgregarFondos";
 
-    public PantallaPrincipalFrame(ControlUsuarios controlUsuarios, ControlTransacciones controlTransacciones, Usuario usuario) {
+    public PantallaPrincipalFrame(ControlUsuarios controlUsuarios, ControlTransacciones controlTransacciones, ControlBoletos controlBoletos, Usuario usuario) {
         this.controlUsuarios = controlUsuarios;
         this.controlTransacciones = controlTransacciones;
+        this.controlBoletos = controlBoletos;
         this.usuario = usuario;
         setTitle("Ticketwizard");
         setSize(800, 600);
@@ -48,7 +51,7 @@ public class PantallaPrincipalFrame extends JFrame {
         perfilPanel.setName(PANEL_PERFIL);
         panelContenido.add(perfilPanel, PANEL_PERFIL);
         panelContenido.add(new BoletosPropiosPanel(usuario), PANEL_MIS_BOLETOS);
-        panelContenido.add(new BuscarBoletosPanel(usuario), PANEL_BUSCAR);
+        panelContenido.add(new BuscarBoletosPanel(controlUsuarios, controlBoletos, usuario), PANEL_BUSCAR);
         panelContenido.add(new HistorialPanel(controlUsuarios, controlTransacciones, usuario), PANEL_HISTORIAL);
         AgregarFondosPanel fondosPanel = new AgregarFondosPanel(controlUsuarios, usuario);
         fondosPanel.setName(PANEL_FONDOS);

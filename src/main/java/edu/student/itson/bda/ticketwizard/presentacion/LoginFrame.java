@@ -1,7 +1,10 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlBoletos;
 import edu.student.itson.bda.ticketwizard.control.ControlTransacciones;
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
+import edu.student.itson.bda.ticketwizard.entidades.Usuario;
+import edu.student.itson.bda.ticketwizard.persistencia.BoletosDAO;
 import edu.student.itson.bda.ticketwizard.persistencia.TransaccionesDAO;
 import edu.student.itson.bda.ticketwizard.persistencia.UsuariosDAO;
 
@@ -125,10 +128,12 @@ public class LoginFrame extends JFrame {
         SwingUtilities.invokeLater(() -> {
             // TODO: hacer esto una realidad
             UsuariosDAO usuariosDAO = new UsuariosDAO();
+            Usuario usuarioAleatorio = usuariosDAO.consultarUsuarioAleatorio();
             new PantallaPrincipalFrame(
                     new ControlUsuarios(usuariosDAO),
                     new ControlTransacciones(new TransaccionesDAO()),
-                    usuariosDAO.consultarUsuarioAleatorio()
+                    new ControlBoletos(new BoletosDAO(), usuarioAleatorio),
+                    usuarioAleatorio
             ).setVisible(true);
             this.dispose();
         });
