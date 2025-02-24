@@ -1,8 +1,10 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
+import edu.student.itson.bda.ticketwizard.control.ControlBoletos;
 import edu.student.itson.bda.ticketwizard.control.ControlEventos;
 import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Usuario;
+import edu.student.itson.bda.ticketwizard.persistencia.BoletosDAO;
 import edu.student.itson.bda.ticketwizard.persistencia.EventosDAO;
 
 public final class InicioPerfil extends javax.swing.JFrame {
@@ -35,8 +37,8 @@ public final class InicioPerfil extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuEventos = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        menuBoletos = new javax.swing.JMenu();
+        menuMiCuenta = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,11 +79,21 @@ public final class InicioPerfil extends javax.swing.JFrame {
         });
         jMenuBar1.add(menuEventos);
 
-        jMenu2.setText("Mis boletos");
-        jMenuBar1.add(jMenu2);
+        menuBoletos.setText("Mis boletos");
+        menuBoletos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuBoletosMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuBoletos);
 
-        jMenu3.setText("Mi cuenta");
-        jMenuBar1.add(jMenu3);
+        menuMiCuenta.setText("Mi cuenta");
+        menuMiCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuMiCuentaMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menuMiCuenta);
 
         jMenu4.setText("Salir");
         jMenuBar1.add(jMenu4);
@@ -153,11 +165,23 @@ public final class InicioPerfil extends javax.swing.JFrame {
     }//GEN-LAST:event_agregarSaldoMouseClicked
 
     private void menuEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuEventosMouseClicked
-        EventosDAO usuariosDAO = new EventosDAO();
-        ControlEventos controlEventos = new ControlEventos(usuariosDAO);
+        EventosDAO eventosDAO = new EventosDAO();
+        ControlEventos controlEventos = new ControlEventos(eventosDAO,this.control);
         this.dispose();
         controlEventos.iniciarCasoUso();
     }//GEN-LAST:event_menuEventosMouseClicked
+
+    private void menuBoletosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBoletosMouseClicked
+        BoletosDAO boletosDAO = new BoletosDAO();   
+        Usuario usuario = control.consultarUsuario();
+        ControlBoletos controlBoletos = new ControlBoletos(boletosDAO, usuario);
+        this.dispose();
+        controlBoletos.iniciarCasoUso();
+    }//GEN-LAST:event_menuBoletosMouseClicked
+
+    private void menuMiCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMiCuentaMouseClicked
+        control.mostrarFormularioMiCuenta();
+    }//GEN-LAST:event_menuMiCuentaMouseClicked
 
     public void establecerInformacionUsuario() {
         Usuario usuario = control.consultarUsuario();
@@ -171,11 +195,11 @@ public final class InicioPerfil extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu menuBoletos;
     private javax.swing.JMenu menuEventos;
+    private javax.swing.JMenu menuMiCuenta;
     private javax.swing.JLabel nombrePerfil;
     private javax.swing.JLabel nombrePerfil1;
     private javax.swing.JLabel nombrePerfil3;
