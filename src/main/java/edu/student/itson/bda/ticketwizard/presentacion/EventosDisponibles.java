@@ -1,6 +1,7 @@
 package edu.student.itson.bda.ticketwizard.presentacion;
 
 import edu.student.itson.bda.ticketwizard.control.ControlEventos;
+import edu.student.itson.bda.ticketwizard.control.ControlUsuarios;
 import edu.student.itson.bda.ticketwizard.entidades.Evento;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -23,6 +24,21 @@ public class EventosDisponibles extends javax.swing.JFrame {
         this.control = control;
         this.llenarTablaEventos();
         this.llenarFiltroEventosEstados();
+    }
+    
+        private void llenarTablaEventos() {
+        List<Evento> listaEventos = this.control.consultarListaEventos();
+        DefaultTableModel modelo = (DefaultTableModel) this.tlbEventos.getModel();
+        for (Evento evento : listaEventos) {
+            Object[] filTabla = {
+                evento.getNombre(),
+                evento.getFecha(),
+                evento.getEstado(),
+                evento.getCiudad(),
+                evento.getRecinto(),
+                evento.getDescripcion(),};
+            modelo.addRow(filTabla);
+        }
     }
 
     private void llenarFiltroEventosEstados() {
@@ -67,22 +83,7 @@ public class EventosDisponibles extends javax.swing.JFrame {
         this.comboBoxEstado.setModel(combo.getModel());
     }
 
-    private void llenarTablaEventos() {
-        List<Evento> listaEventos = this.control.consultarListaEventos();
-        //sacamos el modelo de la tabla para poder manipular sus datos
-        DefaultTableModel modelo = (DefaultTableModel) this.tlbEventos.getModel();
-        // por cada artista devuelto por la clase ocntrol, lo agregamos a la JTable
-        for (Evento evento : listaEventos) {
-            Object[] filTabla = {
-                evento.getNombre(),
-                evento.getFecha(),
-                evento.getEstado(),
-                evento.getCiudad(),
-                evento.getRecinto(),
-                evento.getDescripcion(),};
-            modelo.addRow(filTabla);
-        }
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -100,10 +101,17 @@ public class EventosDisponibles extends javax.swing.JFrame {
         comboBoxEstado = new javax.swing.JComboBox<>();
         comboBoxFecha = new javax.swing.JComboBox<>();
         comboBoxCiudad = new javax.swing.JComboBox<>();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnBuscar.setText("Buscar");
+
+        pnlTablaEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlTablaEventosMouseClicked(evt);
+            }
+        });
 
         tlbEventos.setAutoCreateRowSorter(true);
         tlbEventos.setModel(new javax.swing.table.DefaultTableModel(
@@ -113,6 +121,11 @@ public class EventosDisponibles extends javax.swing.JFrame {
                 "Nombre", "Fecha", "Estado", "Ciudad", "Recinto", "Descripcion"
             }
         ));
+        tlbEventos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tlbEventosMouseClicked(evt);
+            }
+        });
         pnlTablaEventos.setViewportView(tlbEventos);
 
         comboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Estado" }));
@@ -141,21 +154,30 @@ public class EventosDisponibles extends javax.swing.JFrame {
             }
         });
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(btnRegresar)
+                .addGap(18, 18, 18)
                 .addComponent(comboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(comboBoxCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(84, 84, 84)
+                .addGap(18, 18, 18)
                 .addComponent(comboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
+                .addGap(127, 127, 127)
                 .addComponent(btnBuscar)
                 .addGap(16, 16, 16))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlTablaEventos)
                 .addContainerGap())
@@ -170,7 +192,8 @@ public class EventosDisponibles extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(comboBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(comboBoxCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(comboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboBoxFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTablaEventos, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                 .addContainerGap())
@@ -195,8 +218,19 @@ public class EventosDisponibles extends javax.swing.JFrame {
         this.llenarFiltroEventosCiudades();
     }//GEN-LAST:event_comboBoxEstadoItemStateChanged
 
+    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
+        this.control.mostrarFormularioInicioPerfil();
+    }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void pnlTablaEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlTablaEventosMouseClicked
+    }//GEN-LAST:event_pnlTablaEventosMouseClicked
+
+    private void tlbEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tlbEventosMouseClicked
+    }//GEN-LAST:event_tlbEventosMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> comboBoxCiudad;
     private javax.swing.JComboBox<String> comboBoxEstado;
     private javax.swing.JComboBox<String> comboBoxFecha;
